@@ -16,13 +16,13 @@ const getPeriod = (periodType, timeToElapse) => {
   const factorRecieved = periodType.trim().toLowerCase();
   switch (factorRecieved) {
     case 'days':
-      return (Math.trunc((timeToElapse * 1)));
+      return (timeToElapse * 1);
     case 'weeks':
-      return Math.trunc((timeToElapse * 7));
+      return (timeToElapse * 7);
     case 'months':
-      return Math.trunc((timeToElapse * 30));
+      return (timeToElapse * 30);
     default:
-      return Math.trunc(timeToElapse);
+      return timeToElapse;
   }
 };
 
@@ -47,7 +47,7 @@ const covid19ImpactEstimator = (data) => {
     hospitalBedsByRequestedTime: Math.trunc(hospitalBeds(totalHospBeds) - (0.15 * normCases)),
     casesForICUByRequestedTime: Math.trunc(0.05 * normCases),
     casesForVentilatorsByRequestedTime: Math.trunc(0.02 * normCases),
-    dollarsInFlight: Math.trunc((normCases * (avgDIncPop * avgDIncUSD)) / period)
+    dollarsInFlight: Math.ceil((normCases * (avgDIncPop * avgDIncUSD)) / period)
   };
   const severeImpact = {
     currentlyInfected: getCurrentlyInfected(data.reportedCases, 50),
@@ -56,7 +56,7 @@ const covid19ImpactEstimator = (data) => {
     hospitalBedsByRequestedTime: Math.trunc(hospitalBeds(totalHospBeds) - (0.15 * sevCases)),
     casesForICUByRequestedTime: Math.trunc(0.05 * sevCases),
     casesForVentilatorsByRequestedTime: Math.trunc(0.02 * sevCases),
-    dollarsInFlight: Math.trunc((sevCases * (avgDIncPop * avgDIncUSD)) / period)
+    dollarsInFlight: Math.ceil((sevCases * (avgDIncPop * avgDIncUSD)) / period)
   };
 
   return {
